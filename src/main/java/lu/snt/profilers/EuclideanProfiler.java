@@ -3,9 +3,7 @@ package lu.snt.profilers;
 import lu.snt.timeseries.TimePoint;
 import lu.snt.timeseries.TimeSerie;
 import lu.snt.util.MathUtil;
-import lu.snt.util.mlmodels.Gaussian;
-
-import java.util.ArrayList;
+import lu.snt.util.mlmodels.GaussianMatrix;
 
 /**
  * Created by assaad on 17/09/15.
@@ -14,14 +12,14 @@ public class EuclideanProfiler extends Profiler {
 
     private int id;
 
-    Gaussian[] profiles;
+    GaussianMatrix[] profiles;
 
     public EuclideanProfiler(int id, long timeResolution, long profileDuration) {
         super(timeResolution, profileDuration);
         this.id=id;
-        profiles =new Gaussian[this.totalSlot];
+        profiles =new GaussianMatrix[this.totalSlot];
         for(int i=0;i<totalSlot;i++){
-            profiles[i]=new Gaussian();
+            profiles[i]=new GaussianMatrix();
         }
     }
 
@@ -65,15 +63,19 @@ public class EuclideanProfiler extends Profiler {
     }
 
     @Override
-    public double[] profileSerie(TimeSerie ts) {
+    public double[][] profileSerie(TimeSerie ts) {
         EuclideanProfiler ep= new EuclideanProfiler(-1,timeResolution, profileDuration);
         ep.trainSerie(ts);
         double[][] avg= ep.getAvg();
         double[][] thisavg=getAvg();
 
-        double[] scores = new double[totalSlot];
+        double[][] cov=ep.getVariances(avg);
+        double[][] thiscov=getVariances(thisavg);
+
+        double[][] scores = new double[totalSlot][1];
         for(int i=0;i<totalSlot;i++){
-            scores[i]= MathUtil.euclidean(avg[i],thisavg[i]);
+            scores[i][0]= MathUtil.euclidean(avg[i],thisavg[i]);
+            //scores[i][1]=MathUtil.similar(cov[i], thiscov[i], 1.0);
         }
         return scores;
     }

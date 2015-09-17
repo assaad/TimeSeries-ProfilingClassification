@@ -25,6 +25,14 @@ public class TimeSerie {
         return timePoints.toArray(res);
     }
 
+    public double[][] getMatrix(){
+        double[][] res = new double[timePoints.size()][];
+        for(int i=0;i<timePoints.size();i++){
+            res[i]=timePoints.get(i).getFeatures();
+        }
+        return res;
+    }
+
     public int getNumberOfPoints(){
         return timePoints.size();
     }

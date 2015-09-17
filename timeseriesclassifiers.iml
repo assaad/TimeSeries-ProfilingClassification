@@ -40,6 +40,12 @@
     <orderEntry type="library" name="Maven: com.github.fommil.netlib:netlib-native_system-linux-armhf:natives:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.github.fommil.netlib:netlib-native_system-win-x86_64:natives:1.1" level="project" />
     <orderEntry type="library" name="Maven: com.github.fommil.netlib:netlib-native_system-win-i686:natives:1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:all:0.27" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:denseC64:0.27" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:equation:0.27" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:dense64:0.27" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:simple:0.27" level="project" />
+    <orderEntry type="library" name="Maven: org.ejml:core:0.27" level="project" />
     <orderEntry type="library" name="Maven: org.apache.poi:poi:3.9" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.poi:poi-ooxml:3.9" level="project" />

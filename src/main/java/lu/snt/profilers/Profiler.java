@@ -34,6 +34,6 @@ public abstract class Profiler {
 
     abstract public double profilePoint(TimePoint tp);
 
-    abstract public double[] profileSerie(TimeSerie ts);
+    abstract public double[][] profileSerie(TimeSerie ts);
 
 }

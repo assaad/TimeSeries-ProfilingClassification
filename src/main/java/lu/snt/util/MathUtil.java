@@ -25,4 +25,47 @@ public class MathUtil {
         }
         return Math.sqrt(d);
     }
+
+    public static double normalDist (double[] features, double[] avg, double[][] cov){
+return 0;
+    }
+
+    public static double similar(double[] doubles, double[] doubles1,double eps) {
+        if(doubles==null||doubles1==null){
+            return 00.0;
+        }
+        double res=0;
+        for(int i=0;i<doubles.length;i++){
+            if(Math.abs(doubles[i]-doubles1[i])<=eps){
+                res+=1;
+            }
+        }
+        return res;
+    }
+
+    public static double getAvg(double[][] values){
+        if(values.length==0){
+            return 0;
+        }
+        double avg=0;
+        for(int i=0;i<values.length;i++){
+            for(int j=0;j<values[i].length;j++) {
+                avg += values[i][j];
+            }
+        }
+        return avg/values.length;
+    }
+
+    public static double similar(double[][] doubles, double[][] doubles1,double eps) {
+        double res=0;
+        for(int i=0;i<doubles.length;i++){
+            for(int j=0;j<doubles[i].length;j++) {
+                if (Math.abs(doubles[i][j] - doubles1[i][j]) <= eps) {
+                    res += 1;
+                }
+            }
+        }
+        return res;
+    }
+
 }

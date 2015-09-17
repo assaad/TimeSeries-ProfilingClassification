@@ -3,7 +3,7 @@ package lu.snt.profilers;
 import lu.snt.timeseries.TimePoint;
 import lu.snt.timeseries.TimeSerie;
 import lu.snt.util.MathUtil;
-import lu.snt.util.mlmodels.Gaussian;
+import lu.snt.util.mlmodels.GaussianMatrix;
 
 import java.util.ArrayList;
 
@@ -11,13 +11,13 @@ import java.util.ArrayList;
  * Created by assaad on 17/09/15.
  */
 public class GaussianProfiler extends Profiler {
-    Gaussian[] profiles;
+    GaussianMatrix[] profiles;
 
     public GaussianProfiler(long timeResolution, long profileDuration) {
         super(timeResolution, profileDuration);
-        profiles =new Gaussian[this.totalSlot];
+        profiles =new GaussianMatrix[this.totalSlot];
         for(int i=0;i<totalSlot;i++){
-            profiles[i]=new Gaussian();
+            profiles[i]=new GaussianMatrix();
         }
     }
 
@@ -33,8 +33,16 @@ public class GaussianProfiler extends Profiler {
         if(ts.getNumberOfPoints()==0){
             return;
         }
+        TimeSerie[] dispatch=new TimeSerie[totalSlot];
+        for(int i=0;i<totalSlot;i++){
+            dispatch[i]=new TimeSerie();
+        }
         for(TimePoint tp: ts.getTimePoints()){
-            trainPoint(tp);
+            int time=getSlot(tp);
+            dispatch[time].addTimePoint(tp);
+        }
+        for(int i=0;i<totalSlot;i++){
+            profiles[i].trainArray(dispatch[i].getMatrix());
         }
     }
 
@@ -55,13 +63,13 @@ public class GaussianProfiler extends Profiler {
     public double[][] getVariances(double[][] avgs){
         double[][] scores = new double[totalSlot][];
         for(int i=0;i<totalSlot;i++){
-            scores[i]=profiles[i].getCovarianceMatrixSmall(avgs[i],true);
+            scores[i]=profiles[i].getCovarianceMatrixSmall(avgs[i], true);
         }
         return scores;
     }
 
     @Override
-    public double[] profileSerie(TimeSerie ts) {
+    public double[][] profileSerie(TimeSerie ts) {
 
         ArrayList<ArrayList<double[]>> dispatcher = new ArrayList<ArrayList<double[]>>();
         for(int i=0;i<totalSlot;i++){
@@ -73,10 +81,11 @@ public class GaussianProfiler extends Profiler {
             dispatcher.get(time).add(tp.getFeatures());
         }
 
-        double[] scores = new double[totalSlot];
+        double[][] scores = new double[totalSlot][1];
+
         for(int i=0;i<totalSlot;i++){
             double[] getProba = profiles[i].getProbabilityArrayList(dispatcher.get(i));
-            scores[i]= MathUtil.getAvg(getProba);
+            scores[i][0]= MathUtil.getAvg(getProba);
         }
 
         return scores;

@@ -28,7 +28,7 @@ public class EuclideanClassifier extends Classifier {
 
     @Override
     public ArrayList<SolutionSpace> classify(TimeSerie ts) {
-        double[] results;
+        double[][] results;
         ArrayList<SolutionSpace> ss=new ArrayList<SolutionSpace>();
 
         for(int i=0 ;i<numClass;i++){
@@ -39,7 +39,7 @@ public class EuclideanClassifier extends Classifier {
 
     }
 
-    private double score(double[] results) {
+    private double score(double[][] results) {
         return MathUtil.getAvg(results); //can be dynamic time wrap
     }
 }

@@ -1,6 +1,7 @@
 package lu.snt.smartGrid;
 
 import lu.snt.classifiers.EuclideanClassifier;
+import lu.snt.classifiers.GaussianClassifier;
 import lu.snt.timeseries.TimeSerie;
 import lu.snt.util.ExcelLoader;
 import lu.snt.util.SolutionSpace;
@@ -38,7 +39,7 @@ public class TestSmartGrid {
 
 
         //dir="/Users/assaad/work/github/data/validation/";
-        //HashMap<String,ArrayList<ElectricMeasure>> toguess = ExcelLoader.load(dir);
+       // HashMap<String,TimeSerie> toguess = ExcelLoader.load(dir);
         HashMap<String,TimeSerie> toguess =smartmeters;
         numOfUser=toguess.size();
         System.out.println("Loaded measures for "+numOfUser+" users");

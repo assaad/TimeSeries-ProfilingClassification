@@ -1,6 +1,6 @@
 package lu.snt.util;
 
-import lu.snt.util.mlmodels.Gaussian;
+import lu.snt.util.mlmodels.GaussianMatrix;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -45,7 +45,9 @@ public class TestGaussian {
     };
     @Test
     public void testGaussian(){
-        Gaussian g = new Gaussian();
+        GaussianMatrix g = new GaussianMatrix();
+
+        //Gaussian gg = new Gaussian();
 
         double[][] train = new double[16][7];
 
@@ -56,6 +58,8 @@ public class TestGaussian {
                 k++;
             }
         }
+
+    //gg.trainArray(train);
 
         g.trainArray(train);
         double[][] cov=g.getCovarianceMatrix(g.getAverage(),true);
