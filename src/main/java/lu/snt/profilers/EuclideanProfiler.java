@@ -10,11 +10,15 @@ import java.util.ArrayList;
 /**
  * Created by assaad on 17/09/15.
  */
-public class GaussianProfiler extends Profiler {
+public class EuclideanProfiler extends Profiler {
+
+    private int id;
+
     Gaussian[] profiles;
 
-    public GaussianProfiler(long timeResolution, long profileDuration) {
+    public EuclideanProfiler(int id, long timeResolution, long profileDuration) {
         super(timeResolution, profileDuration);
+        this.id=id;
         profiles =new Gaussian[this.totalSlot];
         for(int i=0;i<totalSlot;i++){
             profiles[i]=new Gaussian();
@@ -41,7 +45,7 @@ public class GaussianProfiler extends Profiler {
     @Override
     public double profilePoint(TimePoint tp) {
         int time=getSlot(tp);
-        return profiles[time].getProbability(tp.getFeatures());
+        return profiles[time].getDistance(tp.getFeatures());
     }
 
     public double[][] getAvg(){
@@ -62,23 +66,15 @@ public class GaussianProfiler extends Profiler {
 
     @Override
     public double[] profileSerie(TimeSerie ts) {
-
-        ArrayList<ArrayList<double[]>> dispatcher = new ArrayList<ArrayList<double[]>>();
-        for(int i=0;i<totalSlot;i++){
-            dispatcher.add(i,new ArrayList<double[]>());
-        }
-
-        for(TimePoint tp: ts.getTimePoints()){
-            int time=getSlot(tp);
-            dispatcher.get(time).add(tp.getFeatures());
-        }
+        EuclideanProfiler ep= new EuclideanProfiler(-1,timeResolution, profileDuration);
+        ep.trainSerie(ts);
+        double[][] avg= ep.getAvg();
+        double[][] thisavg=getAvg();
 
         double[] scores = new double[totalSlot];
         for(int i=0;i<totalSlot;i++){
-            double[] getProba = profiles[i].getProbabilityArrayList(dispatcher.get(i));
-            scores[i]= MathUtil.getAvg(getProba);
+            scores[i]= MathUtil.euclidean(avg[i],thisavg[i]);
         }
-
         return scores;
     }
 }

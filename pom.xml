@@ -49,7 +49,17 @@
         <dependency>
             <groupId>com.googlecode.matrix-toolkits-java</groupId>
             <artifactId>mtj</artifactId>
-            <version>1.0.3-SNAPSHOT</version>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.9</version>
         </dependency>
     </dependencies>
 

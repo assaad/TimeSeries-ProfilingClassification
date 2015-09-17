@@ -16,7 +16,7 @@ public class TimeUtil {
     //get time in 15 minutes chunks
     public static int getIntTime(long time, long slotSize, long periodSize){
         long res=time%periodSize;
-        res=res%slotSize;
+        res=res/slotSize;
         return (int)res;
     }
     public static double convertTimeToHour(long time){

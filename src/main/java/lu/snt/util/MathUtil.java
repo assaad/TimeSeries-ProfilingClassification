@@ -14,4 +14,15 @@ public class MathUtil {
         }
         return avg/values.length;
     }
+
+    public static double euclidean(double[] features1, double[] features2) {
+        double d=0;
+        if(features1==null || features2==null){
+            return 0;
+        }
+        for(int i=0;i<features1.length;i++){
+            d+=(features1[i]-features2[i])*(features1[i]-features2[i]);
+        }
+        return Math.sqrt(d);
+    }
 }

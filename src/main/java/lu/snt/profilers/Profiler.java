@@ -8,8 +8,8 @@ import lu.snt.util.TimeUtil;
  * Created by assaad on 17/09/15.
  */
 public abstract class Profiler {
-    private long timeResolution;
-    private long profileDuration;
+    protected long timeResolution;
+    protected long profileDuration;
     protected int totalSlot;
 
     public Profiler(long timeResolution, long profileDuration){

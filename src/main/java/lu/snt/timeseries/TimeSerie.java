@@ -25,4 +25,8 @@ public class TimeSerie {
         return timePoints.toArray(res);
     }
 
+    public int getNumberOfPoints(){
+        return timePoints.size();
+    }
+
 }

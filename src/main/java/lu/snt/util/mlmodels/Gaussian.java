@@ -1,5 +1,6 @@
 package lu.snt.util.mlmodels;
 
+import lu.snt.util.MathUtil;
 import org.apache.commons.math4.distribution.MultivariateNormalDistribution;
 
 import java.util.ArrayList;
@@ -121,6 +122,10 @@ public class Gaussian {
         return cov;
     }
 
+    public double getDistance(double[] features){
+        double[] avg=getAverage();
+        return MathUtil.euclidean(features,avg);
+    }
 
     public double getProbability(double[] features){
         double[] avg=getAverage();
@@ -141,15 +146,33 @@ public class Gaussian {
     }
 
     public double[] getProbabilityArrayList(ArrayList<double[]> features){
+        double[] results = new double[features.size()];
         double[] avg=getAverage();
-        double[][] cov = getCovarianceMatrix(getAverage(),true);
-        MultivariateNormalDistribution mnd = new MultivariateNormalDistribution(avg,cov);
-        double[] results=new double[features.size()];
-        for(int i=0;i<results.length;i++){
-            results[i]= mnd.density(features.get(i));
+        try {
+            double[][] cov = getCovarianceMatrix(getAverage(),true);
+            MultivariateNormalDistribution mnd = new MultivariateNormalDistribution(avg, cov);
+            for (int i = 0; i < results.length; i++) {
+                results[i] = mnd.density(features.get(i));
+            }
+        }
+        catch (Exception ex){
+            for (int i = 0; i < results.length; i++) {
+
+
+            }
         }
         return results;
     }
 
 
+    public double[] getDistanceArrayList(ArrayList<double[]> features) {
+        double[] results = new double[features.size()];
+        double[] avg=getAverage();
+        if(avg!=null) {
+            for (int i = 0; i < results.length; i++) {
+                results[i] = MathUtil.euclidean(features.get(i), avg);
+            }
+        }
+        return results;
+    }
 }
