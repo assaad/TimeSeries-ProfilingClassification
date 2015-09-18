@@ -68,4 +68,14 @@ return 0;
         return res;
     }
 
+    public static double range(double[] min, double[] max, double[] min2, double[] max2) {
+        if(min==null||max==null||min2==null||max2==null){
+            return 0;
+        }
+        double d=0;
+        for(int i=0;i<min.length;i++){
+            d+=Math.abs(max[i]-max2[i])+Math.abs(min[i]-min2[i]);
+        }
+        return d;
+    }
 }

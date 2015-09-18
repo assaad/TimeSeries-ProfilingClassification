@@ -38,9 +38,9 @@ public class TestSmartGrid {
 
 
 
-        //dir="/Users/assaad/work/github/data/validation/";
-       // HashMap<String,TimeSerie> toguess = ExcelLoader.load(dir);
-        HashMap<String,TimeSerie> toguess =smartmeters;
+        dir="/Users/assaad/work/github/data/validation/";
+        HashMap<String,TimeSerie> toguess = ExcelLoader.load(dir);
+       // HashMap<String,TimeSerie> toguess =smartmeters;
         numOfUser=toguess.size();
         System.out.println("Loaded measures for "+numOfUser+" users");
 
@@ -49,7 +49,7 @@ public class TestSmartGrid {
 
         //   for(int maxPoss=5;maxPoss<100;maxPoss++) {
 
-        int maxPossibility=1;
+        int maxPossibility=10;
         int total=0;
         int guess=0;
         int noguess=0;

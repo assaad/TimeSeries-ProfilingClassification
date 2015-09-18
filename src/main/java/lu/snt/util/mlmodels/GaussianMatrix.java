@@ -282,4 +282,12 @@ public class GaussianMatrix {
         }
         return results;
     }
+
+    public double[] getMin() {
+        return min;
+    }
+
+    public double[] getMax() {
+        return max;
+    }
 }

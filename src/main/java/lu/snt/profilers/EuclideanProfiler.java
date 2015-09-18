@@ -57,25 +57,46 @@ public class EuclideanProfiler extends Profiler {
     public double[][] getVariances(double[][] avgs){
         double[][] scores = new double[totalSlot][];
         for(int i=0;i<totalSlot;i++){
-            scores[i]=profiles[i].getCovarianceMatrixSmall(avgs[i],true);
+            scores[i]=profiles[i].getCovarianceMatrixSmall(avgs[i], true);
         }
         return scores;
     }
+
+    public double[][] getMin(){
+        double[][] scores = new double[totalSlot][];
+        for(int i=0;i<totalSlot;i++){
+            scores[i]=profiles[i].getMin();
+        }
+        return scores;
+    }
+
+
+    public double[][] getMax(){
+        double[][] scores = new double[totalSlot][];
+        for(int i=0;i<totalSlot;i++){
+            scores[i]=profiles[i].getMax();
+        }
+        return scores;
+    }
+
 
     @Override
     public double[][] profileSerie(TimeSerie ts) {
         EuclideanProfiler ep= new EuclideanProfiler(-1,timeResolution, profileDuration);
         ep.trainSerie(ts);
         double[][] avg= ep.getAvg();
-        double[][] thisavg=getAvg();
+        double[][] min=ep.getMin();
+        double[][] max=ep.getMax();
 
-        double[][] cov=ep.getVariances(avg);
-        double[][] thiscov=getVariances(thisavg);
+        double[][] thisavg=getAvg();
+        double[][] thismin=getMin();
+        double[][] thismax=getMax();
+
 
         double[][] scores = new double[totalSlot][1];
         for(int i=0;i<totalSlot;i++){
             scores[i][0]= MathUtil.euclidean(avg[i],thisavg[i]);
-            //scores[i][1]=MathUtil.similar(cov[i], thiscov[i], 1.0);
+          //  scores[i][1]= MathUtil.range(min[i],max[i],thismin[i],thismax[i]);
         }
         return scores;
     }
