@@ -3,8 +3,6 @@ package lu.snt.classifiers;
 import lu.snt.timeseries.TimePoint;
 import lu.snt.timeseries.TimeSerie;
 import lu.snt.util.SolutionSpace;
-import lu.snt.util.TimeUtil;
-import net.seninp.jmotif.SAXVSMClassifierParams;
 import net.seninp.jmotif.sax.NumerosityReductionStrategy;
 import net.seninp.jmotif.text.Params;
 import net.seninp.jmotif.text.TextProcessor;
@@ -23,6 +21,23 @@ public class SaxVsmClassifier extends Classifier {
     private Map<String, List<double[]>> trainData;
     private TextProcessor tp;
     private HashMap<String, HashMap<String, Double>> tfidf;
+    List<WordBag> bags;
+
+    //@Parameter(names = { "--window_size", "-w" }, description = "SAX sliding window size")
+    private static int SAX_WINDOW_SIZE = 4;
+
+    //@Parameter(names = { "--word_size", "-p" }, description = "SAX PAA word size")
+    private static int SAX_PAA_SIZE = 8;
+
+    //@Parameter(names = { "--alphabet_size", "-a" }, description = "SAX alphabet size")
+    private static int SAX_ALPHABET_SIZE = 16;
+
+    //@Parameter(names = "--strategy", description = "SAX numerosity reduction strategy")
+    private static NumerosityReductionStrategy SAX_NR_STRATEGY = NumerosityReductionStrategy.EXACT;
+
+
+    public double SAX_NORM_THRESHOLD = 0.01;
+
 
     Params params;
 
@@ -30,9 +45,11 @@ public class SaxVsmClassifier extends Classifier {
         super(numClass, timeResolution, profileDuration);
         trainData=new HashMap<String, List<double[]>>(numClass);
         tp = new TextProcessor();
-        params = new Params(SAXVSMClassifierParams.SAX_WINDOW_SIZE,
-                SAXVSMClassifierParams.SAX_PAA_SIZE, SAXVSMClassifierParams.SAX_ALPHABET_SIZE,
-                SAXVSMClassifierParams.SAX_NORM_THRESHOLD, SAXVSMClassifierParams.SAX_NR_STRATEGY);
+        bags =new ArrayList<WordBag>();
+        params = new Params(SAX_WINDOW_SIZE,
+                SAX_PAA_SIZE, SAX_ALPHABET_SIZE,
+                SAX_NORM_THRESHOLD, SAX_NR_STRATEGY);
+
     }
 
     public void setParam(int windowSize, int paaSize, int alphabetSize, double nThreshold,
@@ -66,6 +83,7 @@ public class SaxVsmClassifier extends Classifier {
         StringBuilder sb = new StringBuilder();
         sb.append(classNum);
         String strI = sb.toString();
+        tp.seriesToWordBag()
         trainData.put(strI,convert(ts));
     }
 
