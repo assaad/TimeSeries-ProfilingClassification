@@ -1,7 +1,9 @@
 package lu.snt.smartGrid;
 
+import lu.snt.classifiers.Classifier;
 import lu.snt.classifiers.EuclideanClassifier;
 import lu.snt.classifiers.GaussianClassifier;
+import lu.snt.classifiers.SaxVsmClassifier;
 import lu.snt.timeseries.TimeSerie;
 import lu.snt.util.ExcelLoader;
 import lu.snt.util.SolutionSpace;
@@ -20,7 +22,7 @@ public class TestSmartGrid {
         System.out.println("Loaded measures for "+numOfUser+" users");
         HashMap<String,Integer> dictionary=new HashMap<String,Integer>();
 
-        EuclideanClassifier gc = new EuclideanClassifier(numOfUser,15*60000,24*3600000);
+       Classifier gc = new SaxVsmClassifier(numOfUser,15*60000,24*3600000);
 
         int user=0;
         for(String k: smartmeters.keySet()) {
@@ -38,9 +40,9 @@ public class TestSmartGrid {
 
 
 
-        dir="/Users/assaad/work/github/data/validation/";
-        HashMap<String,TimeSerie> toguess = ExcelLoader.load(dir);
-       // HashMap<String,TimeSerie> toguess =smartmeters;
+     //   dir="/Users/assaad/work/github/data/validation/";
+       // HashMap<String,TimeSerie> toguess = ExcelLoader.load(dir);
+        HashMap<String,TimeSerie> toguess =smartmeters;
         numOfUser=toguess.size();
         System.out.println("Loaded measures for "+numOfUser+" users");
 

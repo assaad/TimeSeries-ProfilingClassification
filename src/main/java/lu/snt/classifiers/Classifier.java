@@ -1,7 +1,9 @@
 package lu.snt.classifiers;
 
+import lu.snt.timeseries.TimePoint;
 import lu.snt.timeseries.TimeSerie;
 import lu.snt.util.SolutionSpace;
+import lu.snt.util.TimeUtil;
 
 import java.util.ArrayList;
 
@@ -10,8 +12,8 @@ import java.util.ArrayList;
  */
 public abstract class Classifier {
     int numClass;
-    private long timeResolution;
-    private long profileDuration;
+    protected long timeResolution;
+    protected long profileDuration;
 
     public Classifier(int numClass, long timeResolution, long profileDuration){
         this.numClass=numClass;
@@ -22,4 +24,9 @@ public abstract class Classifier {
     public abstract void train(TimeSerie ts, int classNum);
 
     public abstract ArrayList<SolutionSpace> classify(TimeSerie ts);
+
+    protected int getSlot(TimePoint tp){
+        return TimeUtil.getIntTime(tp.getTime(), timeResolution, profileDuration);
+    }
+
 }

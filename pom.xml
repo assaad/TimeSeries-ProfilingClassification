@@ -73,6 +73,11 @@
             <artifactId>fastdtw</artifactId>
             <version>0.1</version>
         </dependency>
+        <dependency>
+            <groupId>net.seninp</groupId>
+            <artifactId>sax-vsm</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 

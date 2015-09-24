@@ -39,6 +39,15 @@ public class EuclideanClassifier extends Classifier {
 
     }
 
+
+    private double[][][] getAllProfiles(){
+        double[][][]res=new double[profilers.length][][];
+        for(int i=0;i<profilers.length;i++){
+            res[i]=profilers[i].getProfileData();
+        }
+        return res;
+    }
+
     private double score(double[][] results) {
         return MathUtil.getAvg(results); //can be dynamic time wrap
     }

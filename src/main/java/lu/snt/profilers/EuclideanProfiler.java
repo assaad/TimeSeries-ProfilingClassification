@@ -95,9 +95,24 @@ public class EuclideanProfiler extends Profiler {
 
         double[][] scores = new double[totalSlot][1];
         for(int i=0;i<totalSlot;i++){
-            scores[i][0]= MathUtil.euclidean(avg[i],thisavg[i]);
+            scores[i][0]= MathUtil.euclidean(avg[i], thisavg[i]);
           //  scores[i][1]= MathUtil.range(min[i],max[i],thismin[i],thismax[i]);
         }
         return scores;
+    }
+
+    public double[][] getProfileData(){
+        double[][] res= new double[4][totalSlot];
+        for(int i=0;i<totalSlot;i++){
+            double[] avg=profiles[i].getAverage();
+            if(avg==null){
+                continue;
+            }
+
+            for(int j=0;j<avg.length;j++){
+                res[j][i]=avg[j];
+            }
+        }
+        return res;
     }
 }

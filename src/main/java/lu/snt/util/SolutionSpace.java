@@ -37,6 +37,10 @@ public class SolutionSpace implements Comparable<SolutionSpace> {
         return sol.size()+1;
     }
 
+    public void addScore(double value){
+        score+=value;
+    }
+
     public static boolean contain (ArrayList<SolutionSpace> sol, int id, int count){
         Collections.sort(sol);
         for(int i=0; i<count;i++){
