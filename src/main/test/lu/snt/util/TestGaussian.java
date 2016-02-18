@@ -73,7 +73,5 @@ public class TestGaussian {
                 k++;
             }
         }
-
-
     }
 }

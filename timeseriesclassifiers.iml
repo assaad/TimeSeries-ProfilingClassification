@@ -46,6 +46,10 @@
     <orderEntry type="library" name="Maven: org.ejml:dense64:0.27" level="project" />
     <orderEntry type="library" name="Maven: org.ejml:simple:0.27" level="project" />
     <orderEntry type="library" name="Maven: org.ejml:core:0.27" level="project" />
+    <orderEntry type="library" name="Maven: com.github.yannrichet:JMathPlot:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.yannrichet:JMathIO:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.yannrichet:JMathArray:1.0" level="project" />
+    <orderEntry type="library" name="Maven: gov.nist.math:jama:1.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.poi:poi:3.9" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.poi:poi-ooxml:3.9" level="project" />

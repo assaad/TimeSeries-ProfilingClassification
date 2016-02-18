@@ -83,7 +83,7 @@ public class SaxVsmClassifier extends Classifier {
         StringBuilder sb = new StringBuilder();
         sb.append(classNum);
         String strI = sb.toString();
-        tp.seriesToWordBag()
+        //tp.seriesToWordBag();
         trainData.put(strI,convert(ts));
     }
 

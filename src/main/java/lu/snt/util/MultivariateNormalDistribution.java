@@ -24,6 +24,7 @@ public class MultivariateNormalDistribution {
         solvePseudoInverseSvd=new SolvePseudoInverseSvd(cov.length,cov.length);
         solvePseudoInverseSvd.setA(conv);
         solvePseudoInverseSvd.invert(inv);
+
         double[] r =solvePseudoInverseSvd.getDecomposition().getSingularValues();
 
         double d=1;
@@ -35,6 +36,7 @@ public class MultivariateNormalDistribution {
         det= 1/d;
 
     }
+
 
     public double density(double[] features){
         return FastMath.pow(2 * FastMath.PI, -0.5 * features.length) *

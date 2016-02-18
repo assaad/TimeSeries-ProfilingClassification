@@ -1,11 +1,10 @@
 package lu.snt.util;
 
-import lu.snt.timeseries.TimePoint;
-import lu.snt.timeseries.TimeSerie;
 import org.apache.poi.ss.usermodel.Row;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
@@ -14,12 +13,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * Created by assaad on 17/09/15.
+ * Created by assaad on 19/02/15.
  */
 public class ExcelLoader {
-    public static HashMap<String,TimeSerie> load(String directory){
-        HashMap<String,TimeSerie> result = new HashMap<String, TimeSerie>();
 
+    public static HashMap<String,ArrayList<ElectricMeasure>> load(String directory){
+        HashMap<String,ArrayList<ElectricMeasure>> result = new HashMap<String, ArrayList<ElectricMeasure>>();
+
+        long starttime=System.nanoTime();
         double apmax=0;
         double ammax=0;
         double rpmax=0;
@@ -30,15 +31,15 @@ public class ExcelLoader {
         String s="";
         try {
             File dir = new File(directory);
+
             File[] directoryListing = dir.listFiles();
-            //  System.out.println("Found " + directoryListing.length + " files");
+          //  System.out.println("Found " + directoryListing.length + " files");
             if (directoryListing != null) {
                 for (File file : directoryListing) {
 
-                    s=file.getName();
-                    if(file.getName().equals(".DS_Store")){
-                        continue;
-                    }
+                   if(file.isDirectory()||file.getName().equals(".DS_Store")){
+                       continue;
+                   }
                     FileInputStream file2 = new FileInputStream(file);
 
                     //Create Workbook instance holding reference to .xlsx file
@@ -59,13 +60,11 @@ public class ExcelLoader {
 
                         if (!equipment.startsWith("ZIVS")) {
                             Date timestamp = row.getCell(1).getDateCellValue();
-                            double[] features= new double[4];
 
                             double aplus = row.getCell(2).getNumericCellValue();
                             double aminus = row.getCell(3).getNumericCellValue();
                             double rplus = row.getCell(4).getNumericCellValue();
                             double rminus = row.getCell(5).getNumericCellValue();
-
 
                             if(aplus<1e7&&aminus<1e7&&rplus<1e7&&rminus<1e7) {
 
@@ -83,20 +82,25 @@ public class ExcelLoader {
                                     rmmax = rminus;
                                 }
 
-                                features[0] = aplus;
-                                features[1] = aminus;
-                                features[2] = rplus;
-                                features[3] = rminus;
-
-                                TimeSerie ad;
+                                ArrayList<ElectricMeasure> ad;
                                 if (result.containsKey(equipment)) {
                                     ad = result.get(equipment);
-                                    TimePoint tp =new TimePoint(timestamp.getTime(),features);
-                                    ad.addTimePoint(tp);
+                                    ElectricMeasure dp = new ElectricMeasure();
+                                    dp.setTime(timestamp.getTime());
+                                    dp.aplus = aplus;
+                                    dp.aminus = aminus;
+                                    dp.rplus = rplus;
+                                    dp.rminus = rminus;
+                                    ad.add(dp);
                                 } else {
-                                    ad = new TimeSerie();
-                                    TimePoint tp =new TimePoint(timestamp.getTime(),features);
-                                    ad.addTimePoint(tp);
+                                    ad = new ArrayList<ElectricMeasure>();
+                                    ElectricMeasure dp = new ElectricMeasure();
+                                    dp.setTime(timestamp.getTime());
+                                    dp.aplus = aplus;
+                                    dp.aminus = aminus;
+                                    dp.rplus = rplus;
+                                    dp.rminus = rminus;
+                                    ad.add(dp);
                                     result.put(equipment, ad);
                                 }
 
@@ -105,23 +109,24 @@ public class ExcelLoader {
                             }
                             else{
                                 errCounter++;
-                                System.out.println("Error in file "+s+ " line: "+rowNum);
                             }
                         }
                     }
-                    //  System.out.println("file "+file.getName()+" read "+rowNum);
+                  //  System.out.println("file "+file.getName()+" read "+rowNum);
                     //fileInputStream.close();
                 }
             }
         }
         catch (Exception e)
         {
-            //  System.out.println("Error in file: "+s);
+          //  System.out.println("Error in file: "+s);
             e.printStackTrace();
         }
-        // System.out.println("Number of Error: "+errCounter);
-        // System.out.println("Read "+globaltotal+" power records!");
-        // System.out.println(apmax+","+ammax+","+rpmax+","+rmmax);
+        long endtime=System.nanoTime();
+        double restime = (endtime-starttime)/1000000000;
+       // System.out.println("Number of Error: "+errCounter);
+        System.out.println("Loaded "+globaltotal+" power records in "+restime+" s !");
+       // System.out.println(apmax+","+ammax+","+rpmax+","+rmmax);
 
 
 
